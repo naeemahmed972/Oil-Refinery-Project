@@ -1,0 +1,162 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height:100%;
+    background-color: rgb(212, 226, 235) !important;
+}
+
+.navbar, .dropdown-menu {
+    background-color: rgb(240, 234, 206) !important;
+}
+
+a.navbar-brand {
+    color:rgb(138, 51, 16) !important;
+}
+
+.figure-caption {
+    color:rgb(138, 51, 16) !important;
+}
+
+a.nav-link {
+    color:rgb(138, 51, 16) !important;
+}
+
+.nav-item:visited, .dropdown-item:visited {
+    background-color: rgb(240, 234, 206) !important;
+}
+
+.nav-item.active, .dropdown-item.active {
+    background-color: rgb(235, 216, 144) !important;
+}
+
+.nav-item:hover, .dropdown-item:hover {
+    background-color: rgb(235, 223, 174) !important;
+}
+
+.dropdown-menu {
+    opacity: 0.9 !important;
+}
+
+.container {
+    color: rgb(138, 51, 16) !important;
+    min-height: 100%;
+    margin-top: 80px;
+}
+
+h1 {
+    font-weight: bolder;
+}
+
+.news {
+    width: 160px;
+    background-color: rgb(138, 51, 16);
+}
+
+.breaking-news {
+    background-color:  rgb(240, 234, 206);
+}
+
+.news-scroll a {
+    text-decoration: none;
+    color: rgb(25, 133, 201);
+    font-size: large;
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px !important;
+    background-color: rgb(138, 51, 16);
+    border-radius: 50%;
+    display: inline-block
+}
+
+.card {
+    background-color:  rgb(240, 234, 206);
+    color: rgb(25, 133, 201);
+}
+
+.card-title {
+    background-color: rgb(138, 51, 16);
+    color: white;
+}
+
+.list-group {
+    background-color:  rgb(240, 234, 206);
+    color: rgb(25, 133, 201);
+}
+
+.list-group-item {
+    background-color:  rgb(240, 234, 206);
+    color: rgb(25, 133, 201);
+    font-weight: bold;
+}
+
+.list-group-item-action:visited {
+    color: rgb(25, 133, 201);
+    background-color: rgb(240, 234, 206) !important;
+}
+
+.list-group-item-action:hover {
+    color: rgb(25, 133, 201);
+    background-color: rgb(235, 223, 174) !important;
+}
+
+.list-group-item-action:active {
+    color: rgb(25, 133, 201);
+    background-color: rgb(235, 223, 174) !important;
+}
+
+
+.user-form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    color: rgb(25, 133, 201) !important;
+    font-weight: bold !important;
+}
+
+input, textarea {
+    color: rgb(253, 234, 159) !important;
+    background-color: rgb(126, 171, 199) !important;
+    font-weight: bold !important;
+}
+
+.form-text {
+    color: rgb(138, 51, 16) !important;
+}
+
+.submit-btn {
+    display: block;
+    border-radius: 10%;
+    background-color: rgb(240, 234, 206);
+    color: rgb(138, 51, 16);
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.submit-btn:hover {
+    background-color: rgb(235, 223, 174);
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 20px;
+    background-color: rgb(240, 234, 206);
+    text-align: center;
+}
+
+.copyright {
+    color:rgb(138, 51, 16);
+    font-weight: bold;
+    font-size: small;
+}

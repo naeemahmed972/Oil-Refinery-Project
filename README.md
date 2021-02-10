@@ -9,22 +9,24 @@
 ***
 * Then install [git](https://git-scm.com/ "Git For Windows") for windows
 ***
-* Now open the command prompt in your desired directory
+* Now open the command prompt in your desired directory (where you want to keep the project)
     * Press `SHIFT + Right Mouse Click` and Select `Open Command Window Here` or `Open Powershell Window Here`
 ***
 * Next, you have to clone the repository to your PC
     * Run the following commmand:
-    `git clone https://github.com/naeemahmed972/Oil-Refinery-Project.git`
+        * `git clone https://github.com/naeemahmed972/Oil-Refinery-Project.git`
 ***
 * Change to Project Directory by running the command:
-    `cd Oil-Refinery-Project`
+    * `cd Oil-Refinery-Project`
 ***
 * Run the following command:
-    `pipenv install`
+    * `pipenv install`
 ***
 * Now run the following command:
-    `python manage.py migrate`
+    * `python manage.py migrate`
 ***
-* Now run the command: `python manage.py createsuperuser` and provide credentials to create the admin account for the project
+* Now run the command and provide credentials to create the admin account for the project:
+    * `python manage.py createsuperuser` 
 ***
-* Now to run the project, give the following command: `python manage.py runserver`
+* Now to run the project, give the following command:
+    * `python manage.py runserver`
