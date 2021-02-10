@@ -12,6 +12,9 @@
 * Now open the command prompt in your desired directory (where you want to keep the project)
     * Press `SHIFT + Right Mouse Click` and Select `Open Command Window Here` or `Open Powershell Window Here`
 ***
+* Run the following command:
+    * `pip install pipenv`
+
 * Next, you have to clone the repository to your PC
     * Run the following commmand:
         * `git clone https://github.com/naeemahmed972/Oil-Refinery-Project.git`
