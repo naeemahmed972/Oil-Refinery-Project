@@ -121,7 +121,7 @@ label {
     font-weight: bold !important;
 }
 
-input, textarea {
+input, textarea, select {
     color: rgb(253, 234, 159) !important;
     background-color: rgb(126, 171, 199) !important;
     font-weight: bold !important;

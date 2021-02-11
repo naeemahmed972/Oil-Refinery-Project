@@ -5,7 +5,7 @@ from django.contrib import messages
 
 
 from .models import CustomUser
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
 class SignUpView(CreateView):
@@ -47,5 +47,9 @@ class UserListView(AdminStaffRequiredMixin, ListView):
 
 
 class UpdateUserPermissionView(AdminStaffRequiredMixin, UpdateView):
-    pass
+    model = CustomUser
+    fields = ('user_permissions',)
+    success_url = reverse_lazy('user_list')
+    template_name = 'user_permissions.html'
+    login_url = 'login'
 
