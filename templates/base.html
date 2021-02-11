@@ -61,10 +61,11 @@
                         <strong>{{ user.username|upper }}</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item nav-link" href="#"><strong>USER MANAGEMENT</strong></a>
+                        <a class="dropdown-item nav-link" href="{% url 'user_list' %}"><strong>USER MANAGEMENT</strong></a>
                         <a class="dropdown-item nav-link" href="#"><strong>STORAGE MANAGEMENT</strong></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item nav-link" href="{% url 'password_change'%}"><strong>CHANGE PASSWORD</strong></a>
+                        <a class="dropdown-item nav-link" href="{% url 'update_user' user.id %}"><strong>UDATE PROFILE</strong></a>
+                        <a class="dropdown-item nav-link" href="{% url 'password_change' %}"><strong>CHANGE PASSWORD</strong></a>
                         <a class="dropdown-item nav-link" href="{% url 'logout' %}"><strong>LOGOUT</strong></a>
                     </div>
                 </li>
@@ -79,6 +80,15 @@
           </ul>
         </div>
     </nav>
+
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message | safe }}
+    </div>
+    {% endfor %}
 
     <div class="container">
         {% block content %}

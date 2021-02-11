@@ -151,3 +151,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # password reset emails will go to command line
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+
+# getting flash messages
+try:
+    from django.contrib.messages import constants as messages
+    MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-info',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+    }
+except Exception as e:
+    pass
+

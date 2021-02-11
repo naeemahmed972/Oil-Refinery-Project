@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
+
 
 
 # Custom user model
@@ -8,4 +10,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
     address = models.TextField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('update_user', args=[str(self.id)])
 

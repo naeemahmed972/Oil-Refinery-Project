@@ -146,6 +146,33 @@ input, textarea {
     background-color: rgb(235, 223, 174);
 }
 
+.head-text, .display-text {
+    color:rgb(138, 51, 16);
+}
+
+.display-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.link-text {
+    font-size: small;
+    text-transform: uppercase;
+    color:rgb(138, 51, 16);
+    text-decoration: none;
+}
+
+.link-text:visited {
+    color:rgb(138, 51, 16);
+    text-decoration: none;
+}
+
+.link-text:hover {
+    color:rgb(138, 51, 16);
+    background-color: rgb(235, 223, 174);
+    text-decoration: none;
+}
+
 .footer {
     bottom: 0;
     width: 100%;
