@@ -173,6 +173,12 @@ input, textarea, select {
     text-decoration: none;
 }
 
+.storage-card {
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .footer {
     bottom: 0;
     width: 100%;

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - Oil Storage
+{% endblock title %}
+
+{% block content %}
+
+    <div class="page-header text-center col-12 mb-4">
+        <h1 class="pt-3">Oil Storage</h1>
+    </div>
+
+    {% if perms.oilstorage.store_management %}
+        <div class="text-right col-12 mb-4">
+            <a class="link-text" href="{% url 'storage_new' %}">+ ADD a NEW TANK</a>
+        </div>
+    {% endif %}
+
+    {% if not object_list %}
+        <div class="card storage-card text-center">
+            <div class="card-header">
+                <span class="display-text">No Oil Storage Deployed Yet.</span>
+            </div>
+        </div>
+    {% else %}
+        {% for tank in object_list %}
+            <div class="card storage-card text-center mb-3">
+                <div class="card-header">
+                    <span class="display-text">{{ tank.name }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

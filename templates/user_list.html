@@ -34,6 +34,14 @@
                     </span>
                 </div>
             </div>
+        {% elif a_user.is_superuser or a_user.is_staff %}
+            <div class="d-none"></div>
+        {% else %}
+            <div class="card user-card text-center">
+                <div class="card-header">
+                    <span class="display-text">No User in the List Yet.</span>
+                </div>
+            </div>
         {% endif %}
     {% endfor %}
 {% endblock content %}

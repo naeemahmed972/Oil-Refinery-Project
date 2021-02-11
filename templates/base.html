@@ -62,7 +62,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item nav-link" href="{% url 'user_list' %}"><strong>USER MANAGEMENT</strong></a>
-                        <a class="dropdown-item nav-link" href="#"><strong>STORAGE MANAGEMENT</strong></a>
+                        <a class="dropdown-item nav-link" href="{% url 'storage_list' %}"><strong>STORAGE MANAGEMENT</strong></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item nav-link" href="{% url 'update_user' user.id %}"><strong>UDATE PROFILE</strong></a>
                         <a class="dropdown-item nav-link" href="{% url 'password_change' %}"><strong>CHANGE PASSWORD</strong></a>
