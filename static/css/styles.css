@@ -152,7 +152,7 @@ input, textarea, select {
 
 .display-text {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 18px !important;
 }
 
 .link-text {
@@ -177,6 +177,35 @@ input, textarea, select {
     width: 50%;
     margin-right: auto;
     margin-left: auto;
+}
+
+.storage-card-header {
+    height: 50px;
+}
+
+.storage-card-body {
+    height: 350px;
+    border-left: 4px solid rgb(87, 28, 7);
+    border-right: 4px solid rgb(87, 28, 7);
+    border-bottom: 4px solid rgb(87, 28, 7);
+}
+
+.storage-card-footer {
+    height: 50px;
+}
+
+.capacity-text {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color:rgb(138, 51, 16);
+    text-decoration: none;
+}
+
+.volume-text {
+    height: 30px;
+    color: rgb(25, 133, 201) !important;
+    font-weight: bold;
 }
 
 .footer {

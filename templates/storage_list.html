@@ -25,8 +25,17 @@
     {% else %}
         {% for tank in object_list %}
             <div class="card storage-card text-center mb-3">
-                <div class="card-header">
+                <div class="card-header storage-card-header">
                     <span class="display-text">{{ tank.name }}</span>
+                    <span class="capacity-text">(Capacity: {{ tank.capacity }} Liters)</span>
+                </div>
+                <div class="carb-body storage-card-body">
+                    <div class="volume-text">Current Volume: {{ tank.current_volume }} Liters</div>
+                    <div class="wave" style="height: 100px; background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(216px);">
+                    </div>
+                </div>
+                <div class="card-footer storage-card-footer">
+
                 </div>
             </div>
         {% endfor %}
