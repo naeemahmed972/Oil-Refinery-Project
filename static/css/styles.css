@@ -208,6 +208,68 @@ input, textarea, select {
     font-weight: bold;
 }
 
+.new-tank-link {
+    text-transform: uppercase;
+    color:rgb(138, 51, 16);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.new-tank-link:visited {
+    color:rgb(138, 51, 16);
+    text-decoration: none;
+}
+
+.new-tank-link:hover {
+    color:rgb(138, 51, 16);
+    border: 1px solid rgb(138, 51, 16);
+    text-decoration: none;
+}
+
+.wave {
+    background: linear-gradient(to bottom, rgb(244, 209, 96), rgb(210, 177, 30));
+    position: relative;
+}
+
+.wave::before, .wave::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat-x;
+}
+
+.wave::before {
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, rgb(240, 234, 206) 13px);
+}
+
+.wave::after {
+    height: 15px;
+    background-size: 40px 20px;
+    background-image: radial-gradient(circle at 10px 15px, rgb(240, 234, 206) 12px, transparent 13px);
+}
+
+.wave--top {
+    background: linear-gradient(to top, rgb(244, 209, 96), rgb(210, 177, 30));
+}
+
+.wave--top::before, .wave--top::after {
+    bottom: auto;
+    top: 0;
+}
+
+.wave--top::before {
+    background-image: radial-gradient(circle at 10px 15px, transparent 12px, rgb(240, 234, 206) 13px);
+}
+
+.wave--top::after {
+    background-image: radial-gradient(circle at 10px 0, rgb(240, 234, 206) 12px, transparent 13px);
+}
+
 .footer {
     bottom: 0;
     width: 100%;

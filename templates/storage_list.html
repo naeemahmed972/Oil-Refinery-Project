@@ -12,7 +12,7 @@
 
     {% if perms.oilstorage.store_management %}
         <div class="text-right col-12 mb-4">
-            <a class="link-text" href="{% url 'storage_new' %}">+ ADD a NEW TANK</a>
+            <a class="new-tank-link" href="{% url 'storage_new' %}">+ ADD a NEW TANK</a>
         </div>
     {% endif %}
 
@@ -24,14 +24,23 @@
         </div>
     {% else %}
         {% for tank in object_list %}
-            <div class="card storage-card text-center mb-3">
+            <div class="card storage-card text-center mb-5">
                 <div class="card-header storage-card-header">
                     <span class="display-text">{{ tank.name }}</span>
                     <span class="capacity-text">(Capacity: {{ tank.capacity }} Liters)</span>
                 </div>
                 <div class="carb-body storage-card-body">
-                    <div class="volume-text">Current Volume: {{ tank.current_volume }} Liters</div>
-                    <div class="wave" style="height: 100px; background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(216px);">
+                    <div class="volume-text">
+                        Current Volume: 
+                        {% if tank.current_volume == 0 %}
+                            Empty
+                        {% elif tank.current_volume == tank.capacity %}
+                            Full
+                        {% else %}
+                            {{ tank.current_volume }}
+                        {% endif %}
+                    </div>
+                    <div class="wave wave--top" style="height: 20px; background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(296px);">
                     </div>
                 </div>
                 <div class="card-footer storage-card-footer">

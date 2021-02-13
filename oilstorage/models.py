@@ -24,8 +24,8 @@ storage_operatons = {
 
 class StorageTank(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    capacity = models.IntegerField()
-    current_volume = models.IntegerField(default=0)
+    capacity = models.PositiveIntegerField()
+    current_volume = models.PositiveIntegerField(default=0)
     installed_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_empty = models.BooleanField(default=True)
@@ -49,8 +49,8 @@ class StorageTank(models.Model):
 class StorageBranch(models.Model):
     name = models.CharField(max_length=200, unique=True)
     loation = models.CharField(max_length=200)
-    capacity = models.IntegerField()
-    current_volume = models.IntegerField()
+    capacity = models.PositiveIntegerField()
+    current_volume = models.PositiveIntegerField()
     added_on = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
@@ -66,7 +66,7 @@ class StorageLog(models.Model):
     operated_tank = models.ForeignKey(StorageTank, on_delete=models.CASCADE, related_name='operated_tank')
     operated_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='storage_operator')
     operation_date = models.DateTimeField(auto_now_add=True)
-    oil_volume = models.IntegerField(null=True)
+    oil_volume = models.PositiveIntegerField(null=True)
     delivered_to = models.ForeignKey(StorageBranch, on_delete=models.CASCADE, related_name='receiving_branch', null=True)
 
     def __str__(self):

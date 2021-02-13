@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 # from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin, MultiplePermissionsRequiredMixin
 from django.urls import reverse_lazy
@@ -6,23 +6,25 @@ from django.urls import reverse_lazy
 from .models import StorageTank, StorageBranch, StorageLog, storage_operatons
 
 
-class StorageListView(MultiplePermissionsRequiredMixin, ListView):
-    permissions = {
-        "any": ("oilstorage.store_keeping", "oilstorage.store_management")
-    }
+class StorageListView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, ListView):
     login_url = 'login'
     redirect_field_name = "hollaback"
     raise_exception = True
+    redirect_unauthenticated_users = True
+    permissions = {
+        "any": ("oilstorage.store_keeping", "oilstorage.store_management")
+    }
 
     model = StorageTank
     template_name = 'storage_list.html'
 
 
-class StorageCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'oilstorage.store_management'
+class StorageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = 'login'
     redirect_field_name = "hollaback"
     raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
 
     model = StorageTank
     template_name = 'storage_new.html'
@@ -40,4 +42,17 @@ class StorageCreateView(PermissionRequiredMixin, CreateView):
         )
         log.save()
         return reverse_lazy('storage_list')
+
+
+class StorageOperateView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, UpdateView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permissions = {
+        "any": ("oilstorage.store_keeping", "oilstorage.store_management")
+    }
+
+    model = StorageTank
+    # fields = 
 
