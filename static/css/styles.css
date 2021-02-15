@@ -270,6 +270,10 @@ input, textarea, select {
     background-image: radial-gradient(circle at 10px 0, rgb(240, 234, 206) 12px, transparent 13px);
 }
 
+table {
+    color:rgb(138, 51, 16) !important;
+}
+
 .footer {
     bottom: 0;
     width: 100%;

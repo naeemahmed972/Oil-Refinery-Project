@@ -48,9 +48,9 @@ class StorageTank(models.Model):
 
 class StorageBranch(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    loation = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
     capacity = models.PositiveIntegerField()
-    current_volume = models.PositiveIntegerField()
+    current_volume = models.PositiveIntegerField(default=0)
     added_on = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 

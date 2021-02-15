@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - Branches
+{% endblock title %}
+
+{% block content %}
+
+    <div class="page-header text-center col-12 mb-4">
+        <h1 class="pt-3">Storge Branches</h1>
+    </div>
+
+    {% if perms.oilstorage.store_management %}
+        <div class="text-right col-12 mb-4">
+            <a class="new-tank-link" href="{% url 'branch_new' %}">+ ADD a NEW BRANCH</a>
+        </div>
+    {% endif %}
+
+    {% if not object_list %}
+        <div class="card storage-card text-center">
+            <div class="card-header">
+                <span class="display-text">No Storage Branch Deployed Yet.</span>
+            </div>
+        </div>
+    {% else %}
+        <table class="table table-striped mb-3 text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for branch in object_list %}
+                  <tr>
+                    <td scope="row">{{ branch.name }}</td>
+                    <td>{{ branch.location }}</td>
+                    <td>{{ branch.capacity }} Liters</td>
+                    <td>{{ branch.current_volume }} Liters</td>
+                    <td>
+                        {% if branch.is_active %}
+                            Active
+                        {% else %}
+                            Not Operational
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="link-text" href="{% url 'branch_update' branch.pk %}">[Update]</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock content %}

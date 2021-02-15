@@ -56,3 +56,39 @@ class StorageOperateView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, U
     model = StorageTank
     # fields = 
 
+
+class BranchListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
+
+    model = StorageBranch
+    template_name = 'storage_branch_list.html'
+
+
+class BranchCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
+
+    model = StorageBranch
+    template_name = 'storage_branch_new.html'
+    fields = ('name', 'location', 'capacity',)
+
+
+class BranchUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
+
+    model = StorageBranch
+    fields = ('name', 'location', 'capacity', 'current_volume', 'is_active',)
+    # success_url = reverse_lazy('branch_list')
+    template_name = 'storage_branch_update.html'
+
