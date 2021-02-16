@@ -32,19 +32,34 @@
                 <div class="carb-body storage-card-body">
                     <div class="volume-text">
                         Current Volume: 
-                        {% if tank.current_volume == 0 %}
+                        {% if tank.is_empty %}
                             Empty
-                        {% elif tank.current_volume == tank.capacity %}
+                        {% elif tank.is_full %}
                             Full
                         {% else %}
-                            {{ tank.current_volume }}
+                            {{ tank.current_volume }} Liters
                         {% endif %}
                     </div>
-                    <div class="wave wave--top" style="height: 20px; background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(296px);">
+                    <div class="wave wave--top" style="height: calc({{ tank.current_volume }} / {{ tank.capacity }} * 316px ); background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(calc(316px - {{ tank.current_volume }} / {{ tank.capacity }} * 316px));">
                     </div>
                 </div>
                 <div class="card-footer storage-card-footer">
+                    {% if tank.is_active %}
+                        {% if not tank.is_full %}
+                            <a class="link-text" href="{% url 'add_oil' tank.pk %}">[ ADD_OIL ]</a>
+                        {% endif %}
 
+                        {% if not tank.is_empty %}
+                            <a class="link-text ml-3" href="#">[ DRAW_OIL ]</a>
+                            <a class="link-text ml-3" href="#">[ MAKE_EMPTY ]</a>
+                        {% endif %}
+                    {% else %}
+                        <span class="capacity-text">The Tank is NOT Operational.</span>
+                    {% endif %}
+
+                    {% if perms.oilstorage.store_management %}
+                        <a class="link-text ml-3" href="#">[ MANAGE_TANK ]</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
