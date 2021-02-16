@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StorageListView, StorageCreateView, BranchListView, BranchCreateView, BranchUpdateView, StorageOilDrawView
+from .views import StorageListView, StorageCreateView, BranchListView, BranchCreateView, BranchUpdateView, StorageOilAddView, StorageOilDrawView
 
 
 urlpatterns = [
@@ -8,5 +8,6 @@ urlpatterns = [
     path('branch_list/', BranchListView.as_view(), name='branch_list'),
     path('branch_new/', BranchCreateView.as_view(), name='branch_new'),
     path('<int:pk>/branch_update/', BranchUpdateView.as_view(), name='branch_update'),
-    path('<int:pk>/add_oil/', StorageOilDrawView.as_view(), name='add_oil'),
+    path('<int:pk>/add_oil/', StorageOilAddView.as_view(), name='add_oil'),
+    path('<int:pk>/draw_oil', StorageOilDrawView.as_view(), name='draw_oil'),
 ]

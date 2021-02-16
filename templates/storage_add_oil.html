@@ -24,7 +24,7 @@
                 <label for="addVolume">
                     Add Volume (max={{ tank_capacity|subtract:tank_volume }})
                 </label>
-                <input name="addVolume" id="addVolume" class="form-control" type="number" min="0" max="{{ tank_capacity|subtract:tank_volume }}" step="1000">
+                <input name="addVolume" id="addVolume" class="form-control" type="number" min="0" max="{{ tank_capacity|subtract:tank_volume }}" value=0 step="1000">
             </div>
 
             <button type="submit" class="submit-btn">Add</button>

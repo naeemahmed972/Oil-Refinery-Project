@@ -4,7 +4,7 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin, MultiplePe
 from django.urls import reverse_lazy
 
 from .models import StorageTank, StorageBranch, StorageLog, storage_operatons
-from .forms import AddOilForm
+from .forms import AddOilForm, DrawOilForm
 
 
 class StorageListView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, ListView):
@@ -45,7 +45,7 @@ class StorageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return reverse_lazy('storage_list')
 
 
-class StorageOilDrawView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, FormView):
+class StorageOilAddView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, FormView):
     login_url = 'login'
     redirect_field_name = "hollaback"
     raise_exception = True
@@ -58,7 +58,7 @@ class StorageOilDrawView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, F
     template_name = 'storage_add_oil.html'
 
     def get_context_data(self, **kwargs):
-        context = super(StorageOilDrawView, self).get_context_data(**kwargs)
+        context = super(StorageOilAddView, self).get_context_data(**kwargs)
         query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
         context['tank_name'] = query_tank.name
         context['tank_capacity'] = query_tank.capacity
@@ -95,6 +95,65 @@ class StorageOilDrawView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, F
             operated_tank = tank,
             operated_by = self.request.user,
             oil_volume = volume
+        )
+        log.save()
+
+        return reverse_lazy('storage_list')
+
+
+class StorageOilDrawView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, FormView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permissions = {
+        "any": ("oilstorage.store_keeping", "oilstorage.store_management")
+    }
+
+    form_class = DrawOilForm
+    template_name = 'storage_draw_oil.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StorageOilDrawView, self).get_context_data(**kwargs)
+        query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
+        context['tank_name'] = query_tank.name
+        context['tank_capacity'] = query_tank.capacity
+        context['tank_volume'] = query_tank.current_volume
+        context['tank_id'] = self.kwargs['pk']
+        context['branch_list'] = StorageBranch.objects.all()
+        return context
+
+    def get_success_url(self) -> str:
+        tank_id = self.get_context_data()['tank_id']
+        tank = StorageTank.objects.get(id=tank_id)
+        volume = int(self.request.POST['drawVolume'])
+        branch_id = int(self.request.POST['deliveryBranch'])
+        if volume >= 0:
+            new_volume = tank.current_volume - volume
+            if new_volume < 0:
+                return False
+            else:
+                tank.current_volume = new_volume
+        else:
+            return False
+
+        if new_volume < tank.capacity:
+            if tank.is_full:
+                tank.is_full = False
+
+        if new_volume == 0:
+            tank.is_empty = True
+
+        tank.last_operated_by = self.request.user
+
+        tank.save()
+
+        log = StorageLog.objects.create(
+            operation = storage_operatons["DRAW_OIL"],
+            operated_tank = tank,
+            operated_by = self.request.user,
+            oil_volume = volume,
+            delivered_to = StorageBranch.objects.get(id=branch_id)
         )
         log.save()
 

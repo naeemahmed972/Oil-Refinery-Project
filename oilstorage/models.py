@@ -11,7 +11,7 @@ from django.urls import reverse
 storage_operatons = {
     "NEW_TANK": "new tank added",
     "ADD_OIL" : "oil added",
-    "DRAW" : "oil drawn",
+    "DRAW_OIL" : "oil drawn",
     "EMPTY" : "tank emptied",
     "BLOCK" : "tank marked as not working",
     "UNBLOCK" : "tank marked as working",
@@ -55,7 +55,7 @@ class StorageBranch(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Branch: {self.name}, Location: {self.loation}"
+        return f"Branch: {self.name}, Location: {self.location}"
 
     def get_absolute_url(self):
         return reverse('branch_list')

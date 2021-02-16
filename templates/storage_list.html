@@ -50,7 +50,7 @@
                         {% endif %}
 
                         {% if not tank.is_empty %}
-                            <a class="link-text ml-3" href="#">[ DRAW_OIL ]</a>
+                            <a class="link-text ml-3" href="{% url 'draw_oil' tank.pk %}">[ DRAW_OIL ]</a>
                             <a class="link-text ml-3" href="#">[ MAKE_EMPTY ]</a>
                         {% endif %}
                     {% else %}

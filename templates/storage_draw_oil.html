@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load custom_tags %}
+
+{% block title %}
+    {{ block.super }} - Draw Oil from Tank
+{% endblock title %}
+
+{% block content %}
+    <div class="page-header text-center col-12 mb-4">
+        <h1 class="pt-3">Draw Oil from Tank</h1>
+    </div>
+
+    <div class="user-form">
+        <form action="{% url 'draw_oil' tank_id %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for='selectedTank'>Tank</label>
+                <input id="selectedTank" class="form-control" type="text" value="{{ tank_name }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="addVolume">
+                    Draw Volume (max={{ tank_volume }})
+                </label>
+                <input name="drawVolume" id="addVolume" class="form-control" type="number" min="0" max="{{ tank_volume }}" value=0 step="1000">
+            </div>
+
+            <div class="form-group">
+                <label for='branchList'>Deliver to Branch</label>
+                <select class="form-control" id="branchList" name="deliveryBranch">
+                    <option selected disabled>Select a Branch</option>
+                    {% for branch in branch_list %}
+                        {% if branch.is_active %}
+                            <option value={{ branch.id }}>{{ branch }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Draw</button>
+        </form>
+    </div>
+{% endblock content %}
