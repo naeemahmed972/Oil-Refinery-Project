@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load custom_tags %}
+
+{% block title %}
+    {{ block.super }} - Make Tank Empty
+{% endblock title %}
+
+{% block content %}
+    <div class="page-header text-center col-12 mb-4">
+        <h1 class="pt-3">Make Tank Empty</h1>
+    </div>
+
+    <div class="user-form">
+        <form action="{% url 'empty_tank' tank_id %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for='selectedTank'>Tank</label>
+                <input id="selectedTank" class="form-control" type="text" value="{{ tank_name }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for='tankVolume'>Current Volume (Liters)</label>
+                <input id="tankVolume" class="form-control" type="text" value="{{ tank_volume }}" readonly>
+            </div>
+
+            <p class="text-danger">Are you sure that you want to make the Tank empty?</p>
+
+            <button type="submit" class="submit-btn">Confirm</button>
+        </form>
+    </div>
+{% endblock content %}

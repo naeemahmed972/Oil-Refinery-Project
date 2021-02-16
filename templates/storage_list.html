@@ -51,14 +51,14 @@
 
                         {% if not tank.is_empty %}
                             <a class="link-text ml-3" href="{% url 'draw_oil' tank.pk %}">[ DRAW_OIL ]</a>
-                            <a class="link-text ml-3" href="#">[ MAKE_EMPTY ]</a>
+                            <a class="link-text ml-3" href="{% url 'empty_tank' tank.pk %}">[ MAKE_EMPTY ]</a>
                         {% endif %}
                     {% else %}
                         <span class="capacity-text">The Tank is NOT Operational.</span>
                     {% endif %}
 
                     {% if perms.oilstorage.store_management %}
-                        <a class="link-text ml-3" href="#">[ MANAGE_TANK ]</a>
+                        <a class="link-text ml-3" href="{% url 'tank_detail' tank.pk %}">[ VIEW_DETAILS ]</a>
                     {% endif %}
                 </div>
             </div>

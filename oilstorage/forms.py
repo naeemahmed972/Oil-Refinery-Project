@@ -8,3 +8,6 @@ class AddOilForm(forms.Form):
 class DrawOilForm(forms.Form):
     pass
 
+class MakeTankEmptyForm(forms.Form):
+    pass
+

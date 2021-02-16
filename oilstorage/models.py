@@ -55,7 +55,7 @@ class StorageBranch(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Branch: {self.name}, Location: {self.location}"
+        return f"{self.name}, {self.location}"
 
     def get_absolute_url(self):
         return reverse('branch_list')
@@ -70,5 +70,5 @@ class StorageLog(models.Model):
     delivered_to = models.ForeignKey(StorageBranch, on_delete=models.CASCADE, related_name='receiving_branch', null=True)
 
     def __str__(self):
-        return f"Operation: {self.operation}, On: {self.operated_tank}"
+        return f"{self.operation}, {self.operated_tank}"
 

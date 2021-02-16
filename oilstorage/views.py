@@ -1,10 +1,9 @@
-from django.views.generic import ListView, CreateView, UpdateView, FormView, TemplateView
-# from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import ListView, CreateView, UpdateView, FormView, DetailView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin, MultiplePermissionsRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import StorageTank, StorageBranch, StorageLog, storage_operatons
-from .forms import AddOilForm, DrawOilForm
+from .forms import AddOilForm, DrawOilForm, MakeTankEmptyForm
 
 
 class StorageListView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, ListView):
@@ -43,6 +42,50 @@ class StorageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         )
         log.save()
         return reverse_lazy('storage_list')
+
+
+class StorageDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
+
+    model = StorageTank
+    template_name = 'storage_tank_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StorageDetailView, self).get_context_data(**kwargs)
+        query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
+        context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).order_by('-operation_date')
+        return context
+
+
+class StorageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permission_required = 'oilstorage.store_management'
+
+    model = StorageTank
+    fields = ('name', 'capacity', 'current_volume', 'is_active', 'is_empty', 'is_full',)
+    template_name = 'storage_tank_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StorageUpdateView, self).get_context_data(**kwargs)
+        context['tank_id'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.last_operated_by = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        tank_id = self.get_context_data()['tank_id']
+        tank = StorageTank.objects.get(id=tank_id)
+
+        return reverse_lazy('tank_detail', kwargs={'pk': tank.id})
 
 
 class StorageOilAddView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, FormView):
@@ -160,6 +203,52 @@ class StorageOilDrawView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, F
         return reverse_lazy('storage_list')
 
 
+class StorageMakeEmptyView(LoginRequiredMixin, MultiplePermissionsRequiredMixin, FormView):
+    login_url = 'login'
+    redirect_field_name = "hollaback"
+    raise_exception = True
+    redirect_unauthenticated_users = True
+    permissions = {
+        "any": ("oilstorage.store_keeping", "oilstorage.store_management")
+    }
+
+    form_class = MakeTankEmptyForm
+    template_name = 'storage_make_tank_empty.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StorageMakeEmptyView, self).get_context_data(**kwargs)
+        query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
+        context['tank_name'] = query_tank.name
+        context['tank_volume'] = query_tank.current_volume
+        context['tank_id'] = self.kwargs['pk']
+        return context
+
+    def get_success_url(self) -> str:
+        tank_id = self.get_context_data()['tank_id']
+        tank = StorageTank.objects.get(id=tank_id)
+        volume = self.get_context_data()['tank_volume']
+
+        tank.current_volume = 0
+        tank.is_empty = True
+        
+        if tank.is_full:
+            tank.is_full = False
+
+        tank.last_operated_by = self.request.user
+
+        tank.save()
+
+        log = StorageLog.objects.create(
+            operation = storage_operatons["EMPTY"],
+            operated_tank = tank,
+            operated_by = self.request.user,
+            oil_volume = volume,
+        )
+        log.save()
+
+        return reverse_lazy('storage_list')
+
+
 class BranchListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = 'login'
     redirect_field_name = "hollaback"
@@ -192,6 +281,5 @@ class BranchUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     model = StorageBranch
     fields = ('name', 'location', 'capacity', 'current_volume', 'is_active',)
-    # success_url = reverse_lazy('branch_list')
     template_name = 'storage_branch_update.html'
 

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - Tank Details
+{% endblock title %}
+
+{% block content %}
+
+    <div class="page-header text-center col-12 mb-4">
+        <h1 class="pt-3">Tank Details</h1>
+    </div>
+
+    {% if perms.oilstorage.store_management %}
+        <div class="text-right col-12 mb-4">
+            <a class="new-tank-link" href="{% url 'tank_update' object.pk %}">[ UPDATE_TANK ]</a>
+        </div>
+    {% endif %}
+
+    <div class="card storage-card text-center mb-5">
+        <div class="card-header storage-card-header">
+            <span class="display-text">{{ object.name }}</span>
+            <span class="capacity-text">(Capacity: {{ object.capacity }} Liters)</span>
+        </div>
+        <div class="carb-body storage-card-body">
+            <div class="volume-text">
+                Current Volume: 
+                {% if object.is_empty %}
+                    Empty
+                {% elif object.is_full %}
+                    Full
+                {% else %}
+                    {{ object.current_volume }} Liters
+                {% endif %}
+            </div>
+            <div class="wave wave--top" style="height: calc({{ object.current_volume }} / {{ object.capacity }} * 316px ); background-color: rgb(228, 215, 165); overflow: hidden; margin: auto; transform: translateY(calc(316px - {{ object.current_volume }} / {{ object.capacity }} * 316px));">
+            </div>
+        </div>
+        <div class="card-footer storage-card-footer">
+            {% if object.is_active %}
+                <p class="display-text">
+                    Last Operated at {{ object.last_operated_at|date:'Y-m-d H:i' }} by {{ object.last_operated_by }}
+                </p>
+            {% else %}
+                <span class="capacity-text">The Tank is NOT Operational.</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <table class="table table-striped text-center">
+        <caption class="display-text" style="caption-side:top; text-align: center;">Operation Log</caption>
+        <thead>
+            <tr>
+                <th scope="col">Operation</th>
+                <th scope="col">Operator</th>
+                <th scope="col">Time</th>
+                <th scope="col">Oil Volume</th>
+                <th scope="col">Delivered Branch</th>
+                <th scope="col">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+              <tr>
+                <td scope="row">{{ log.operation }}</td>
+                <td>{{ log.operated_by }}</td>
+                <td>{{ log.operation_date|date:'Y-m-d H:i' }}</td>
+                <td>{{ log.oil_volume }}</td>
+                <td>{{ log.delivered_to }}</td>
+              </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

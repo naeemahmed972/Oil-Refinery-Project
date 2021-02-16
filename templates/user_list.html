@@ -10,38 +10,45 @@
         <h1 class="pt-3">Users</h1>
     </div>
 
-    {% for a_user in object_list %}
-        {% if not a_user.is_superuser and not a_user.is_staff %}
-            <div class="card user-card mb-3 text-left">
-                <div class="card-header">
-                    <span class="head-text">Name: </span>
-                    <span class="display-text">{{ a_user.first_name }} {{ a_user.last_name }}</span>
-                    <span class="ml-2 head-text">Username: </span>
-                    <span class="display-text">{{ a_user.username }}</span>
-                    <span class="ml-2 head-text">Permissions: </span>
-                    <span class="display-text">
-                        {% if store_management in a_user.get_user_permissions %}
-                            Store Manager
-                        {% elif store_keeping in a_user.get_user_permissions %}
-                            Store Keeper
-                        {% else %}
-                            No Permissions
-                        {% endif %}
-                    </span>
-                    <span class="float-right">
-                        <a class="link-text" href="{% url 'update_user' a_user.pk %}">Update_User</a>
-                        <a class="ml-2 link-text" href="{% url 'user_permissions' a_user.pk %}">Update_Permissions</a>
-                    </span>
-                </div>
-            </div>
-        {% elif a_user.is_superuser or a_user.is_staff %}
-            <div class="d-none"></div>
-        {% else %}
-            <div class="card user-card text-center">
-                <div class="card-header">
-                    <span class="display-text">No User in the List Yet.</span>
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
+    <table class="table table-striped mb-3 text-center">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Permissions</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a_user in object_list %}
+                {% if not a_user.is_superuser and not a_user.is_staff %}
+                    <tr>
+                        <td scope="row">
+                            {{ a_user.first_name }} {{ a_user.last_name }}
+                        </td>
+                        <td>{{ a_user.username }}</td>
+                        <td>
+                            {% if store_management in a_user.get_user_permissions %}
+                                Store Manager
+                            {% elif store_keeping in a_user.get_user_permissions %}
+                                Store Keeper
+                            {% else %}
+                                No Permissions
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="link-text" href="{% url 'update_user' a_user.pk %}">[ Update_User ]</a>
+                            <a class="ml-2 link-text" href="{% url 'user_permissions' a_user.pk %}">[ Update_Permissions ]</a>
+                        </td>
+                    </tr>
+                {% elif a_user.is_superuser or a_user.is_staff %}
+                    <tr class="d-none"></tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No User in the List Yet.</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
