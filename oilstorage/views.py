@@ -69,7 +69,7 @@ class StorageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     permission_required = 'oilstorage.store_management'
 
     model = StorageTank
-    fields = ('name', 'capacity', 'current_volume', 'is_active', 'is_empty', 'is_full',)
+    fields = ('name', 'capacity',)
     template_name = 'storage_tank_update.html'
 
     def get_context_data(self, **kwargs):
