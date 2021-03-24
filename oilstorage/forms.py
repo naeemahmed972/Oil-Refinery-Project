@@ -1,5 +1,4 @@
 from django import forms
-from .models import StorageTank
 
 
 class AddOilForm(forms.Form):
@@ -10,4 +9,4 @@ class DrawOilForm(forms.Form):
 
 class MakeTankEmptyForm(forms.Form):
     pass
-
+    

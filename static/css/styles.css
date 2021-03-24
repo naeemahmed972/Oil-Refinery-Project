@@ -116,6 +116,10 @@ h1 {
     margin-right: auto;
 }
 
+.search-form {
+    width: 100%;
+}
+
 label {
     color: rgb(25, 133, 201) !important;
     font-weight: bold !important;
@@ -144,6 +148,10 @@ input, textarea, select {
 
 .submit-btn:hover {
     background-color: rgb(235, 223, 174);
+}
+
+.search-btn {
+    height: 100%;
 }
 
 .head-text, .display-text {

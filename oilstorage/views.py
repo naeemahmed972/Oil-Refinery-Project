@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.views.generic import ListView, CreateView, UpdateView, FormView, DetailView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin, MultiplePermissionsRequiredMixin
 from django.urls import reverse_lazy
@@ -58,7 +59,36 @@ class StorageDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
         context = super(StorageDetailView, self).get_context_data(**kwargs)
         query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
         context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).order_by('-operation_date')
+        context['branch_list'] = StorageBranch.objects.all()
+        context['storage_operations'] = storage_operatons
         return context
+
+    def post(self, request, *args, **kwargs):
+        input_branch = ""
+        input_date = ""
+        input_operation = ""
+        if request.POST['deliveryBranch']:
+            input_branch = request.POST['deliveryBranch']
+        if request.POST["operation_date"]:
+            input_date = datetime.strptime(request.POST["operation_date"], "%Y-%m-%d")
+        if request.POST['operation']:
+            input_operation = request.POST['operation']
+        
+        self.object = self.get_object()
+        context = super(StorageDetailView, self).get_context_data(**kwargs)
+        query_tank = StorageTank.objects.get(id=self.kwargs['pk'])
+        if input_branch != "":
+            branch = StorageBranch.objects.get(id=int(input_branch))
+            context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).filter(delivered_to=branch).order_by('-operation_date')
+        elif input_date != "":
+            context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).filter(operation_date__day=input_date.day).filter(operation_date__month=input_date.month).filter(operation_date__year=input_date.year).order_by('-operation_date')
+        elif input_operation != "":
+            context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).filter(operation=storage_operatons[input_operation]).order_by('-operation_date')
+        else:
+            context['logs'] = StorageLog.objects.filter(operated_tank=query_tank).order_by('-operation_date')
+        context['branch_list'] = StorageBranch.objects.all()
+        context['storage_operations'] = storage_operatons
+        return self.render_to_response(context=context)
 
 
 class StorageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
